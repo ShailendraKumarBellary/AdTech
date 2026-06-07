@@ -1,0 +1,52 @@
+<div class="login-page-container">
+    <div class="login-card shadow-lg">
+        
+        <header class="login-header">
+            <h1>Welcome</h1>
+            <p class="subtitle">Log in to access your Dynamic Testing Dashboard</p>
+        </header>
+
+        <div class="error-banner" *ngIf="errorMessage">
+            <span class="error-icon">⚠️</span>
+            <p>{{ errorMessage }}</p>
+        </div>
+
+        <form (ngSubmit)="onLogin()" #loginForm="ngForm" novalidate>
+            
+            <div class="form-group">
+                <label class="form-label" for="username">Username / Email</label>
+                <div class="input-wrapper">
+                    <input 
+                        type="text" 
+                        id="username" 
+                        name="username"
+                        [(ngModel)]="credentials.username" 
+                        placeholder="admin@example.com"
+                        required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="password">Password</label>
+                <div class="input-wrapper">
+                    <input 
+                        type="password" 
+                        id="password" 
+                        name="password"
+                        [(ngModel)]="credentials.password" 
+                        placeholder="••••••••"
+                        required>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block">
+                Sign In
+            </button>
+        </form>
+
+        <footer class="login-footer">
+            <p class="status-indicator online">Analyst Secure Environment</p>
+        </footer>
+
+    </div>
+</div>

@@ -1,0 +1,285 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* --- Layout Base --- */
+.dashboard-wrapper {
+    font-family: 'Inter', sans-serif;
+    width: 100%;
+    max-width: 1200px;
+    margin: 1rem auto;
+    padding: 0 1rem;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* --- GAM Dashboard Header Styling --- */
+.dashboard-header {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.header-left {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.brand-badge {
+    background-color: #34a853; /* Google Green styled identifier */
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 0.75rem;
+    padding: 0.35rem 0.6rem;
+    border-radius: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: 4px;
+}
+
+.dashboard-header h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0 0 0.35rem 0;
+    letter-spacing: -0.02em;
+}
+
+.dashboard-header .subtitle {
+    font-size: 0.9rem;
+    color: #64748b;
+    margin: 0;
+    line-height: 1.4;
+}
+
+.status-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.825rem;
+    font-weight: 500;
+    padding: 0.35rem 0.75rem;
+    border-radius: 20px;
+}
+
+.status-indicator.online {
+    background-color: #f0fdf4;
+    color: #166534;
+    border: 1px solid #bbf7d0;
+}
+
+/* --- Informative '?' Icons & Tooltips --- */
+.info-trigger {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #e2e8f0;
+    color: #475569;
+    font-size: 0.7rem;
+    font-weight: 700;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    margin-left: 4px;
+    cursor: help;
+    transition: all 0.15s ease;
+    vertical-align: middle;
+}
+
+.info-trigger:hover {
+    background-color: #cbd5e1;
+    color: #0f172a;
+}
+
+/* --- Cards --- */
+.card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 1.25rem;
+    box-sizing: border-box;
+}
+.shadow-sm {
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.05);
+}
+
+/* --- Responsive Form Layouts --- */
+.form-row {
+    width: 100%;
+}
+
+.grid-2 {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    margin-top: 1.25rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid #f1f5f9;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+}
+
+.form-label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #334155;
+    display: flex;
+    align-items: center;
+}
+
+.input-group {
+    display: flex;
+    gap: 0.5rem;
+    width: 100%;
+}
+
+input[type="text"] {
+    flex: 1;
+    min-width: 0;
+    padding: 0.625rem 0.875rem;
+    font-size: 0.95rem;
+    color: #1e293b;
+    background-color: #ffffff;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    outline: none;
+    transition: all 0.15s ease-in-out;
+}
+input[type="text"]:focus {
+    border-color: #6366f1;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+}
+
+/* --- Angular Material UI Adjustments --- */
+.mat-select-wrapper {
+    width: 100%;
+}
+.custom-mat-field {
+    width: 100% !important;
+}
+::v-deep .custom-mat-field .mat-mdc-text-field-wrapper {
+    background-color: #ffffff !important;
+    border-radius: 8px !important;
+    height: 44px !important;
+}
+
+/* --- Buttons --- */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+    font-size: 0.925rem;
+    padding: 0.625rem 1.25rem;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    white-space: nowrap;
+}
+.btn-primary { color: #ffffff; background-color: #4f46e5; }
+.btn-primary:hover { background-color: #4338ca; }
+.btn-secondary { color: #334155; background-color: #f1f5f9; border-color: #e2e8f0; }
+.btn-secondary:hover { background-color: #e2e8f0; }
+
+/* --- Table & Table Internal Layout Elements --- */
+.table-card {
+    padding: 0;
+    overflow: hidden;
+}
+
+.table-header-bar {
+    padding: 1.25rem 1.5rem;
+    background-color: #ffffff;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.table-header-bar h2 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #0f172a;
+    margin: 0 0 0.25rem 0;
+}
+
+.table-header-bar p {
+    font-size: 0.85rem;
+    color: #64748b;
+    margin: 0;
+}
+
+.table-responsive-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.925rem;
+    text-align: left;
+}
+th {
+    background-color: #f8fafc;
+    color: #475569;
+    font-weight: 600;
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid #e2e8f0;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+}
+td {
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid #f1f5f9;
+    color: #64748b;
+}
+tbody tr:last-child td { border-bottom: none; }
+tbody tr:hover { background-color: #f8fafc; }
+
+/* --- Text / Visual Utility Additions --- */
+.badge {
+    display: inline-block;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.825rem;
+    font-weight: 500;
+    border-radius: 6px;
+    white-space: nowrap;
+}
+.badge-light { background-color: #f1f5f9; color: #334155; border: 1px solid #e2e8f0; }
+.font-mono { font-family: monospace, Courier, monospace; font-size: 0.85rem; }
+.font-medium { font-weight: 500; }
+.text-slate { color: #1e293b; }
+.text-indigo { color: #4f46e5; }
+.text-nowrap { white-space: nowrap; }
+
+/* --- Media Queries (Desktop Adjustments) --- */
+@media (min-width: 768px) {
+    .dashboard-wrapper {
+        margin: 2rem auto;
+        gap: 2rem;
+    }
+    .dashboard-header {
+        flex-direction: row;
+        align-items: center;
+    }
+    .card {
+        padding: 1.5rem;
+    }
+    .grid-2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+    }
+}

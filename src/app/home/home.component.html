@@ -1,0 +1,108 @@
+<ngx-spinner bdColor="rgba(15, 23, 42, 0.75)" size="medium" color="#6366f1" type="ball-spin-clockwise">
+    <p style="color: white; font-family: sans-serif; font-size: 14px; margin-top: 10px;">Fetching URL info...</p>
+</ngx-spinner>
+
+<div class="dashboard-wrapper">
+
+    <div class="logout-container" style="position: absolute; top: 20px; right: 20px;">
+        <button class="status-indicator online" (click)="logout()">Logout</button>
+    </div>
+    
+    <!-- BRAND & DASHBOARD HEADER -->
+    <header class="dashboard-header">
+        <div class="header-left">
+            <div class="brand-badge">Ad Tech</div>
+            <div>
+                <h1>Ad Dynamic Testing Dashboard</h1>
+                <p class="subtitle">Extract, search, and analyze ad unit context and dynamic reporting dimensions directly from a target live URL.</p>
+            </div>
+        </div>
+        <div class="header-right">
+            <span class="status-indicator online">Analyst Environment</span>
+        </div>
+    </header>
+
+    <!-- ACTION CARD -->
+    <div class="card shadow-sm">
+        <!-- Top Section: URL Entry -->
+        <div class="form-row">
+            <div class="form-group">
+                <label class="form-label">
+                    Target URL 
+                    <span class="info-trigger" title="Enter the complete live webpage URL where your Google Ad Manager slots are deployed.">?</span>
+                </label>
+                <div class="input-group">
+                    <input type="text" [(ngModel)]="URLinfo" placeholder="https://example.com/page-to-test">
+                    <button class="btn btn-primary" (click)="getURLInfo()">Get URL Info</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Section: 2-Column Grid for Search & Filter (Conditional) -->
+        <div class="grid-2" *ngIf="URLData">
+            <div class="form-group">
+                <label class="form-label">
+                    Search Context 
+                    <span class="info-trigger" title="Search through the target URL's HTML code, metadata, script tags, or ad unit configuration payloads.">?</span>
+                </label>
+                <div class="input-group">
+                    <input type="text" [(ngModel)]="searchQuery" placeholder="e.g., pos=top, scp_key...">
+                    <button class="btn btn-secondary" (click)="SearchUrl()">Search</button>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">
+                    Filter Report Dimensions 
+                    <span class="info-trigger" title="Isolate a specific custom parameter, targeting value, key-value match, or custom dimensions linked to this slot.">?</span>
+                </label>
+                <div class="mat-select-wrapper">
+                    <mat-form-field appearance="outline" class="custom-mat-field">
+                        <mat-select [(value)]="selectedReportDimension" (selectionChange)="addSelectedDimension()" placeholder="Select dynamic dimension...">
+                            <mat-option *ngFor="let item of keyParams" [value]="item">
+                                {{ item }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- DATA TABLE CARD -->
+    <div class="card table-card shadow-sm" *ngIf="showTable">
+        <div class="table-header-bar">
+            <h2>Discovered Ad Slots & Key-Value Overlays</h2>
+            <p>Cross-referencing active page slots against selected runtime variables.</p>
+        </div>
+        
+        <div class="table-responsive-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Ad Units</th>
+                        <th>Line Item ID</th>
+                        <th>Creative ID</th>
+                        <th>{{ selectedReportDimension || 'Dynamic Dimension' }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let ad of filteredData">
+                        <td class="font-medium text-slate text-nowrap">{{ urlFilteredData?.iu_parts }}</td>
+                        <td><span class="badge badge-light font-mono">{{ ad.lineItemId }}</span></td>
+                        <td><span class="badge badge-light font-mono">{{ ad.creativeId }}</span></td>
+                        <td class="text-indigo font-medium text-nowrap">
+                            {{ urlFilteredData?.[selectedReportDimension] || '—' }}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<footer class="footer">
+    <div class="container" style="text-align: center; padding: 20px; background-color: #f8f9fa;">
+        <p>Developed by Bellary Shailendra Kumar | Ad Tech full stack Developer.</p>
+        <p>&copy; 2026 Ad Tech. All rights reserved.</p>
+    </div>
+</footer>
