@@ -1,3 +1,4 @@
+
 # AdTech
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.21.
@@ -25,3 +26,7 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+
+## Screenshots
+<img width="1997" height="1434" alt="image" src="https://github.com/user-attachments/assets/a9fa6518-8187-456a-a2e3-ba49e5158c54" />
+<img width="1135" height="1154" alt="image" src="https://github.com/user-attachments/assets/ac8c008a-94b3-4705-9309-e4cfb22f629c" />
