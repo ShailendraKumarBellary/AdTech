@@ -29,7 +29,7 @@ export class HomeComponent {
   URLData: any;
   showTable: boolean = false;
   // apiurl = 'https://localhost:44328/api/Scrape?url=';
-  apiurl = 'http://20.235.247.64:5000/api/Scrape?url=';
+  apiurl = 'https://adtechapi2026.centralindia.cloudapp.azure.com/api/Scrape?url=';
   filteredData: any[] = [];
   urlFilteredData:any;
   keyParams: string[] = [];
