@@ -14,7 +14,8 @@
             <div class="brand-badge">Ad Tech</div>
             <div>
                 <h1>Ad Dynamic Testing Dashboard</h1>
-                <p class="subtitle">Extract, search, and analyze ad unit context and dynamic reporting dimensions directly from a target live URL.</p>
+                <p class="subtitle">Extract, search, and analyze ad unit context and dynamic reporting dimensions
+                    directly from a target live URL.</p>
             </div>
         </div>
         <div class="header-right">
@@ -29,7 +30,8 @@
             <div class="form-group">
                 <label class="form-label">
                     Target URL
-                    <span class="info-trigger" title="Enter the complete live webpage URL where your Google Ad Manager slots are deployed.">?</span>
+                    <span class="info-trigger"
+                        title="Enter the complete live webpage URL where your Google Ad Manager slots are deployed.">?</span>
                 </label>
                 <div class="input-group">
                     <input type="text" [(ngModel)]="URLinfo" placeholder="https://example.com/page-to-test">
@@ -40,33 +42,49 @@
 
         <!-- Bottom Section: 2-Column Grid for Search & Filter (Conditional) -->
         <div class="grid-2" *ngIf="URLData">
+
+            <!-- Search -->
             <div class="form-group">
                 <label class="form-label">
                     Total Ad Requests: {{ URLData?.totalRequests || 0 }} <br>
                     Search Context
-                    <span class="info-trigger" title="Search through the target URL's HTML code, metadata, script tags, or ad unit configuration payloads.">?</span>
+                    <span class="info-trigger"
+                        title="Search through the target URL's HTML code, metadata, script tags, or ad unit configuration payloads.">
+                        ?
+                    </span>
                 </label>
+
                 <div class="input-group">
                     <input type="text" [(ngModel)]="searchQuery" placeholder="e.g., pos=top, scp_key...">
-                    <button class="btn btn-secondary" (click)="SearchUrl()">Search</button>
+
+                    <button class="btn btn-secondary" (click)="SearchUrl()">
+                        Search
+                    </button>
                 </div>
             </div>
 
+            <!-- Filter -->
             <div class="form-group">
                 <label class="form-label">
                     Filter Report Dimensions
-                    <span class="info-trigger" title="Isolate a specific custom parameter, targeting value, key-value match, or custom dimensions linked to this slot.">?</span>
+                    <span class="info-trigger"
+                        title="Isolate a specific custom parameter, targeting value, key-value match, or custom dimensions linked to this slot.">
+                        ?
+                    </span>
                 </label>
-                <div class="mat-select-wrapper">
-                    <mat-form-field appearance="outline" class="custom-mat-field">
-                        <mat-select [(value)]="selectedReportDimension" (selectionChange)="addSelectedDimension()" placeholder="Select dynamic dimension...">
-                            <mat-option *ngFor="let item of keyParams" [value]="item">
-                                {{ item }}
-                            </mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                </div>
+
+                <mat-form-field appearance="outline" class="dimension-dropdown">
+                    <mat-select [(value)]="selectedReportDimension" (selectionChange)="addSelectedDimension()"
+                        placeholder="Select dynamic dimension...">
+
+                        <mat-option *ngFor="let item of keyParams" [value]="item">
+                            {{ item }}
+                        </mat-option>
+
+                    </mat-select>
+                </mat-form-field>
             </div>
+
         </div>
     </div>
 
