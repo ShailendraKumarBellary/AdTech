@@ -7,7 +7,7 @@
     <div class="logout-container" style="position: absolute; top: 20px; right: 20px;">
         <button class="status-indicator online" (click)="logout()">Logout</button>
     </div>
-    
+
     <!-- BRAND & DASHBOARD HEADER -->
     <header class="dashboard-header">
         <div class="header-left">
@@ -28,7 +28,7 @@
         <div class="form-row">
             <div class="form-group">
                 <label class="form-label">
-                    Target URL 
+                    Target URL
                     <span class="info-trigger" title="Enter the complete live webpage URL where your Google Ad Manager slots are deployed.">?</span>
                 </label>
                 <div class="input-group">
@@ -42,7 +42,8 @@
         <div class="grid-2" *ngIf="URLData">
             <div class="form-group">
                 <label class="form-label">
-                    Search Context 
+                    Total Ad Requests: {{ URLData?.totalRequests || 0 }} <br>
+                    Search Context
                     <span class="info-trigger" title="Search through the target URL's HTML code, metadata, script tags, or ad unit configuration payloads.">?</span>
                 </label>
                 <div class="input-group">
@@ -53,7 +54,7 @@
 
             <div class="form-group">
                 <label class="form-label">
-                    Filter Report Dimensions 
+                    Filter Report Dimensions
                     <span class="info-trigger" title="Isolate a specific custom parameter, targeting value, key-value match, or custom dimensions linked to this slot.">?</span>
                 </label>
                 <div class="mat-select-wrapper">
@@ -75,11 +76,13 @@
             <h2>Discovered Ad Slots & Key-Value Overlays</h2>
             <p>Cross-referencing active page slots against selected runtime variables.</p>
         </div>
-        
+
         <div class="table-responsive-wrapper">
             <table>
                 <thead>
                     <tr>
+                        <th>Ads.txt</th>
+                        <th>Robots.txt</th>
                         <th>Ad Units</th>
                         <th>Line Item ID</th>
                         <th>Creative ID</th>
@@ -88,8 +91,44 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let ad of filteredData">
+                        <td class="font-medium text-slate text-nowrap">
+
+                            <span *ngIf="URLData.adsTxt.adsTxtExists" class="text-success">
+                                ✅ Found
+                            </span>
+
+                            <span *ngIf="!URLData.adsTxt.adsTxtExists" class="text-danger">
+                                ❌ Missing
+                            </span>
+
+                            @if (URLData?.adsTxt?.adsTxtUrl) {
+                            <a [href]="URLData.adsTxt.adsTxtUrl" target="_blank" rel="noopener noreferrer" class="ml-2"
+                                title="View Ads.txt">
+                                ↗️
+                            </a>
+                            }
+
+                        </td>
+
+                        <td class="font-medium text-slate text-nowrap">
+
+                            <span *ngIf="URLData.adsTxt.robotsTxtExists" class="text-success">
+                                ✅ Found
+                            </span>
+
+                            <span *ngIf="!URLData.adsTxt.robotsTxtExists" class="text-danger">
+                                ❌ Missing
+                            </span>
+
+                            @if (URLData?.adsTxt?.robotsTxtUrl) {
+                            <a [href]="URLData.adsTxt.robotsTxtUrl" target="_blank" rel="noopener noreferrer"
+                                class="ml-2" title="View Robots.txt">
+                                ↗️
+                            </a>
+                            }
+
+                        </td>
                         <td class="font-medium text-slate text-nowrap">{{ urlFilteredData?.iu_parts }}</td>
-                        <td><span class="badge badge-light font-mono">{{ ad.lineItemId }}</span></td>
                         <td><span class="badge badge-light font-mono">{{ ad.creativeId }}</span></td>
                         <td class="text-indigo font-medium text-nowrap">
                             {{ urlFilteredData?.[selectedReportDimension] || '—' }}
