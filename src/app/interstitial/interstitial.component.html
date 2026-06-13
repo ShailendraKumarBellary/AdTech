@@ -1,0 +1,75 @@
+<div class="dashboard-wrapper">
+
+    <header class="dashboard-header">
+        <div class="header-left">
+            <div class="brand-badge">Ad Tech</div>
+            <div>
+                <h1>GPT Web Interstitial Tester</h1>
+                <p class="subtitle">Validate and isolate out-of-page interstitial ad unit behaviors and triggers.</p>
+            </div>
+        </div>
+
+        <div class="header-right">
+            <div class="nav-switcher">
+                <button class="nav-tab" (click)="navigateTo('home')">Home</button>
+                <button class="nav-tab active">Interstitial</button>
+                <button class="nav-tab" (click)="navigateTo('rewarded')">Rewarded</button>
+            </div>
+        </div>
+    </header>
+
+    <div class="card shadow-sm">
+        <div class="form-row">
+            <div class="form-group">
+                <label class="form-label">
+                    Target Ad Unit Path
+                    <span class="info-trigger"
+                        title="Enter the complete Google Ad Manager out-of-page interstitial ad unit path.">?</span>
+                </label>
+                <div class="input-group">
+                    <input type="text" [(ngModel)]="adUnitPath" placeholder="e.g., /1234567/global_interstitial"
+                        required>
+                    <button class="btn btn-primary" (click)="testInterstitial()" [disabled]="enableViewports">Test Interstitial</button>
+                    <button class="btn btn-secondary" (click)="resetTester()">Reset</button>
+                </div>
+                <br>
+                <label class="form-label">Enter Targeting Key-Value Pairs (optional)<span class="info-trigger"
+                        title="Enter the Key-Value pairs for targeting.">?</span></label>
+                <div class="input-group" *ngFor="let item of targetingPairs; let i=index">
+                    <input type="text" [(ngModel)]="item.key" placeholder="Key">
+
+                    <input type="text" [(ngModel)]="item.value" placeholder="Value">
+                </div>
+            </div>
+            <div class="card shadow-sm">
+
+                <div class="device-header">
+                    <div>
+                        <section class="example-section" style="margin-left: 21.7rem;">
+                            <mat-checkbox class="example-margin" [(ngModel)]="enableViewports">enable Viewports</mat-checkbox>
+                        </section>
+                    </div>
+                    <div *ngIf="enableViewports">
+                        <h3>Device Emulator</h3>
+                        <p>Preview GPT Interstitial behavior across different viewport sizes.</p>
+                    </div>
+                    
+                </div>
+
+                <div class="device-switcher" *ngIf="enableViewports">
+                    <button class="device-tab" [class.active]="selectedDevice === 'mobile'"
+                        (click)="selectedDevice = 'mobile'">
+                        📲 Mobile
+                    </button>
+
+                    <button class="device-tab" [class.active]="selectedDevice === 'tablet'"
+                        (click)="selectedDevice = 'tablet'">
+                        📱 Tablet
+                    </button>
+                    <button class="btn btn-primary" (click)="openTestWindow()">
+                        Test {{selectedDevice}} viewport
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>

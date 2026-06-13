@@ -1,0 +1,25 @@
+body {
+    margin: 0;
+}
+
+.preview-page {
+    min-height: 100vh;
+    background: #f1f5f9;
+}
+
+.fake-phone {
+    min-height: 100vh;
+    background: white;
+}
+
+.phone-header {
+    padding: 16px;
+    background: #4f46e5;
+    color: white;
+    font-weight: 600;
+    text-align: center;
+}
+
+.phone-content {
+    padding: 20px;
+}
