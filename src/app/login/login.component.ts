@@ -32,7 +32,7 @@ export class LoginComponent {
     }
 
     // Temporary Hardcoded UI Validation
-    if (this.credentials.username === 'admin' && this.credentials.password === 'admin123') {
+    if (this.credentials.username === 'admin' && this.credentials.password === 'Bellary@98') {
       
       // Simulating a successful login save state
       localStorage.setItem('isLoggedIn', 'true');
