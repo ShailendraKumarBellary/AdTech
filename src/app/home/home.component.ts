@@ -30,20 +30,23 @@ export class HomeComponent {
   searchQuery: any;
   URLData: any;
   showTable: boolean = false;
-  // apiurl = 'https://localhost:44328/api/Scrape?url=';
-  apiurl = 'https://adtechapi2026.centralindia.cloudapp.azure.com/api/Scrape?url=';
+  apiurl = 'https://localhost:44328/api/Scrape?url=';
+  //apiurl = 'https://adtechapi2026.centralindia.cloudapp.azure.com/api/Scrape?url=';
   filteredData: any[] = [];
   urlFilteredData: any;
   keyParams: string[] = [];
   selectedReportDimension: string = '';
-  currentView: 'home' | 'interstitial' | 'rewarded' = 'home';
+  currentView: 'home' | 'cmp' | 'interstitial' | 'rewarded' = 'home';
+  public currentPage: number = 1;
+  public pageSize: number = 10;
+  protected readonly Math = Math;
 
 
 
 
 
   // Method to navigate to different views
-  navigateTo(view: 'home' | 'interstitial' | 'rewarded'): void {
+  navigateTo(view: 'home' | 'cmp' | 'interstitial' | 'rewarded'): void {
     this.currentView = view;
     if (view === 'home') {
       this.router.navigate(['/home']);
@@ -51,12 +54,19 @@ export class HomeComponent {
       this.router.navigate(['/interstitial']);
     } else if (view === 'rewarded') {
       this.router.navigate(['/rewarded']);
+    } else if (view === 'cmp') {
+      this.router.navigate(['/cmp']);
     }
   }
 
   getURLInfo() {
     this.spinner.show();
     this.URLData = null;
+    if(this.URLinfo === undefined || this.URLinfo.trim() === '') {
+      this.spinner.hide();
+      alert('Please enter a valid URL.');
+      return;
+    }
     this.http.get(this.apiurl + this.URLinfo)
       .subscribe({
         next: (data: any) => {

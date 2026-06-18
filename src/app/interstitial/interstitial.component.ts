@@ -154,6 +154,8 @@ export class InterstitialComponent implements OnInit, OnDestroy {
       this.router.navigate(['/interstitial']);
     } else if (view === 'rewarded') {
       this.router.navigate(['/rewarded']);
+    } else if (view === 'cmp') {
+      this.router.navigate(['/cmp']);
     }
   }
 

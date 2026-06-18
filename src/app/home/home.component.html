@@ -1,5 +1,6 @@
 <ngx-spinner bdColor="rgba(15, 23, 42, 0.75)" size="medium" color="#6366f1" type="ball-spin-clockwise">
-    <p style="color: white; font-family: sans-serif; font-size: 14px; margin-top: 10px;">Fetching URL info...</p>
+    <p style="color: white; font-family: sans-serif; font-size: 14px; margin-top: 10px;">Fetching URL info via
+        Playwright...</p>
 </ngx-spinner>
 
 <div class="dashboard-wrapper">
@@ -8,20 +9,22 @@
         <button class="status-indicator online" (click)="logout()">Logout</button>
     </div>
 
-    <!-- BRAND & DASHBOARD HEADER -->
     <header class="dashboard-header">
         <div class="header-left">
-            <div class="brand-badge">Ad Tech</div>
+            <!-- <div class="brand-badge">Ad-Test Tool</div> -->
             <div>
-                <h1>Ad Dynamic Testing Dashboard</h1>
-                <p class="subtitle">Extract, search, and analyze ad unit context and dynamic reporting dimensions
-                    directly from a target live URL.</p>
+                <h1>Automated Ad Delivery Testing Panel</h1>
+                <p class="subtitle">Headless diagnostic system designed to extract live inventory logs, line item
+                    mappings, and dynamic runtime target dimensions.</p>
             </div>
         </div>
         <div class="header-right">
             <div class="nav-switcher">
                 <button class="nav-tab" [class.active]="currentView === 'home'" (click)="navigateTo('home')">
                     Home
+                </button>
+                <button class="nav-tab" [class.active]="currentView === 'cmp'" (click)="navigateTo('cmp')">
+                    CMP
                 </button>
                 <button class="nav-tab" [class.active]="currentView === 'interstitial'"
                     (click)="navigateTo('interstitial')">
@@ -34,116 +37,103 @@
         </div>
     </header>
 
-    <!-- ACTION CARD -->
-    <div class="card shadow-sm">
-        <!-- Top Section: URL Entry -->
-        <div class="form-row">
-            <div class="form-group">
-                <label class="form-label">
-                    Target URL
-                    <span class="info-trigger"
-                        title="Enter the complete live webpage URL where your Google Ad Manager slots are deployed.">?</span>
-                </label>
-                <div class="input-group">
-                    <input type="text" [(ngModel)]="URLinfo" placeholder="https://example.com/page-to-test">
-                    <button class="btn btn-primary" (click)="getURLInfo()">Get URL Info</button>
+    <div class="main-split-layout">
+
+        <div class="left-controls-column">
+
+            <div class="card shadow-sm">
+                <div class="form-group">
+                    <label class="form-label">
+                        Target URL Discovery
+                        <span class="info-trigger"
+                            title="Enter the target live webpage URL. Playwright will instantiate a headless node to parse the slot architectures.">?</span>
+                    </label>
+                    <div class="input-group">
+                        <input type="text" [(ngModel)]="URLinfo" placeholder="https://example.com/page-to-test">
+                        <button class="btn btn-primary" (click)="getURLInfo()">Get URL Info</button>
+                    </div>
                 </div>
             </div>
+
+            <div class="card shadow-sm" *ngIf="URLData">
+                <div class="controls-vertical-stack">
+                    <div class="form-group">
+                        <label class="form-label">
+                            Search Engine Context
+                            <span class="info-trigger"
+                                title="Query raw source structural payloads, slot configurations, or custom parameters matching this expression.">?</span>
+                        </label>
+                        <div class="input-group">
+                            <input type="text" [(ngModel)]="searchQuery" placeholder="e.g., pos=top, scp_key...">
+                            <button class="btn btn-secondary" (click)="SearchUrl()">Search</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">
+                            Isolate Reporting Key-Values
+                            <span class="info-trigger"
+                                title="Select a targeted dynamic structural dimension to inspect cross-referenced overlays.">?</span>
+                        </label>
+                        <mat-form-field appearance="outline" class="dimension-dropdown custom-mat-field">
+                            <mat-select [(value)]="selectedReportDimension" (selectionChange)="addSelectedDimension()"
+                                placeholder="Select dynamic dimension...">
+                                <mat-option *ngFor="let item of keyParams" [value]="item">
+                                    {{ item }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
-        <!-- Bottom Section: 2-Column Grid for Search & Filter (Conditional) -->
-        <div class="grid-2" *ngIf="URLData">
-
-            <!-- Search -->
-            <div class="form-group">
-                <label class="form-label">
-                    Search Context
-                    <span class="info-trigger"
-                        title="Search through the target URL's HTML code, metadata, script tags, or ad unit configuration payloads.">
-                        ?
-                    </span>
-                </label>
-
-                <div class="input-group">
-                    <input type="text" [(ngModel)]="searchQuery" placeholder="e.g., pos=top, scp_key...">
-
-                    <button class="btn btn-secondary" (click)="SearchUrl()">
-                        Search
-                    </button>
-                </div>
-            </div>
-
-            <!-- Filter -->
-            <div class="form-group">
-                <label class="form-label">
-                    Filter Report Dimensions
-                    <span class="info-trigger"
-                        title="Isolate a specific custom parameter, targeting value, key-value match, or custom dimensions linked to this slot.">
-                        ?
-                    </span>
-                </label>
-
-                <mat-form-field appearance="outline" class="dimension-dropdown">
-                    <mat-select [(value)]="selectedReportDimension" (selectionChange)="addSelectedDimension()"
-                        placeholder="Select dynamic dimension...">
-
-                        <mat-option *ngFor="let item of keyParams" [value]="item">
-                            {{ item }}
-                        </mat-option>
-
-                    </mat-select>
-                </mat-form-field>
-            </div>
-            <div class="p-4 bg-white border border-slate-200 rounded-xl shadow-sm max-w-sm space-y-3.5">
-                <div class="flex justify-between items-center pb-2 border-b border-slate-100">
-                    <span class="text-sm font-medium text-slate-500">Total Ad Requests:</span>
-                    <span class="text-base font-semibold text-slate-800">
-                        {{ URLData?.totalRequests || 0 }}
-                    </span>
+        <div class="right-metrics-column" *ngIf="URLData">
+            <div class="card shadow-sm metrics-card">
+                <div class="metrics-header">
+                    <span class="metrics-label">Total Ad Requests</span>
+                    <span class="metrics-value">{{ URLData?.totalRequests || 0 }}</span>
                 </div>
 
-                <div class="space-y-2.5">
-
-                    <!-- Ads.txt -->
-                    <div class="flex justify-between items-center text-sm">
-                        <div class="flex items-center gap-2">
+                <div class="status-tags-list">
+                    <div class="status-row-item">
+                        <span class="status-title text-slate-500">Inventory Authorization</span>
+                        <div class="tag-wrapper">
                             @if (URLData?.adsTxt?.adsTxtExists) {
                             <a href="{{ URLData.adsTxt.adsTxtUrl }}" target="_blank" rel="noopener noreferrer"
-                                class="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-emerald-50 text-emerald-700 ring-1 ring-inset ring-emerald-600/10">
-                                ● Ads.txt Found
+                                class="badge-status success">
+                                ● Ads.txt Verified
                             </a>
                             } @else {
-                            <span
-                                class="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-rose-50 text-rose-700 ring-1 ring-inset ring-rose-600/10">
+                            <span class="badge-status error">
                                 ● Ads.txt Missing
                             </span>
                             }
                         </div>
                     </div>
 
-                    <!-- Robots.txt -->
-                    <div class="flex justify-between items-center text-sm">
-                        <div class="flex items-center gap-2">
+                    <div class="status-row-item">
+                        <span class="status-title text-slate-500">Crawler Accessibility</span>
+                        <div class="tag-wrapper">
                             @if (URLData?.adsTxt?.robotsTxtExists) {
                             <a href="{{ URLData.adsTxt.robotsTxtUrl }}" target="_blank" rel="noopener noreferrer"
-                                class="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-emerald-50 text-emerald-700 ring-1 ring-inset ring-emerald-600/10">
+                                class="badge-status success">
                                 ● Robots.txt Found
                             </a>
                             } @else {
-                            <span
-                                class="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-rose-50 text-rose-700 ring-1 ring-inset ring-rose-600/10">
-                                ● Robots.txt Missing
+                            <span class="badge-status error">
+                                ● Robots.txt Restrictive
                             </span>
                             }
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
+
     </div>
 
-    <!-- DATA TABLE CARD -->
     <div class="card table-card shadow-sm" *ngIf="URLData">
         <div class="table-header-bar">
             <h2>Discovered Ad Slots & Key-Value Overlays</h2>
@@ -161,7 +151,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let ad of filteredData">
+                    <tr *ngFor="let ad of filteredData | slice:((currentPage - 1) * pageSize):(currentPage * pageSize)">
                         <td class="font-medium text-slate text-nowrap">{{ ad.urlParams?.iu_parts }}</td>
                         <td><span class="badge badge-light font-mono">{{ ad.lineItemId }}</span></td>
                         <td><span class="badge badge-light font-mono">{{ ad.creativeId }}</span></td>
@@ -169,14 +159,51 @@
                             {{ ad.urlParams?.[selectedReportDimension] || '—' }}
                         </td>
                     </tr>
+                    <tr *ngIf="filteredData?.length === 0">
+                        <td colspan="4" style="text-align: center; padding: 2rem; color: #94a3b8;">
+                            No matching ad configurations found matching the criteria.
+                        </td>
+                    </tr>
                 </tbody>
             </table>
         </div>
+
+        <div class="table-pagination-bar" *ngIf="filteredData && filteredData.length > pageSize">
+            <div class="pagination-info">
+                Showing
+                <strong>{{ ((currentPage - 1) * pageSize) + 1 }}</strong>
+                to
+                <strong>{{ (currentPage * pageSize) > filteredData.length ? filteredData.length : (currentPage *
+                    pageSize) }}</strong>
+                of
+                <strong>{{ filteredData.length }}</strong> ad units
+            </div>
+
+            <div class="pagination-actions">
+                <button class="btn btn-pagination" [disabled]="currentPage === 1"
+                    (click)="currentPage = currentPage - 1">
+                    &larr; Previous
+                </button>
+
+                <span class="page-indicator">Page {{ currentPage }} of {{ Math.ceil(filteredData.length / pageSize) || 1
+                    }}</span>
+
+                <button class="btn btn-pagination" [disabled]="currentPage >= (filteredData.length / pageSize)"
+                    (click)="currentPage = currentPage + 1">
+                    Next &rarr;
+                </button>
+            </div>
+        </div>
     </div>
+
 </div>
+
 <footer class="footer">
-    <div class="container" style="text-align: center; padding: 20px; background-color: #f8f9fa;">
-        <p>Developed by Bellary Shailendra Kumar | Ad Tech full stack Developer.</p>
-        <p>&copy; 2026 Ad Tech. All rights reserved.</p>
+    <div class="container"
+        style="text-align: center; padding: 20px; background-color: #f8f9fa; border-top: 1px solid #e2e8f0; margin-top: 3rem;">
+        <p style="margin: 0 0 4px 0; color: #475569; font-size: 0.9rem;">Developed by Bellary Shailendra Kumar | Ad Tech
+            Full Stack Developer</p>
+        <p style="margin: 0; color: #94a3b8; font-size: 0.8rem;">&copy; 2026 Ad Tech Support Analytics. All rights
+            reserved.</p>
     </div>
 </footer>

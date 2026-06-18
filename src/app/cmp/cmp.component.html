@@ -1,7 +1,7 @@
 <div class="dashboard-wrapper">
 
     <header class="dashboard-header">
-       <div class="header-left">
+        <div class="header-left">
             <!-- <div class="brand-badge">Ad-Test Tool</div> -->
             <div>
                 <h1>Automated Ad Delivery Testing Panel</h1>
@@ -10,15 +10,14 @@
             </div>
         </div>
 
+
         <div class="header-right">
             <div class="nav-switcher">
                 <button class="nav-tab" (click)="navigateTo('home')">Home</button>
-                <button class="nav-tab" (click)="navigateTo('cmp')">CMP</button>
+                <button class="nav-tab active">CMP</button>
                 <button class="nav-tab" (click)="navigateTo('interstitial')">Interstitial</button>
-                <button class="nav-tab active">Rewarded</button>
+                <button class="nav-tab" (click)="navigateTo('rewarded')">Rewarded</button>
             </div>
         </div>
     </header>
-
-    
 </div>
