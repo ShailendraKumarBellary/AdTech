@@ -30,8 +30,8 @@ export class HomeComponent {
   searchQuery: any;
   URLData: any;
   showTable: boolean = false;
-  apiurl = 'https://localhost:44328/api/Scrape?url=';
-  //apiurl = 'https://adtechapi2026.centralindia.cloudapp.azure.com/api/Scrape?url=';
+  //apiurl = 'https://localhost:44328/api/Scrape?url=';
+  apiurl = 'https://adtechapi2026.centralindia.cloudapp.azure.com/api/Scrape?url=';
   filteredData: any[] = [];
   urlFilteredData: any;
   keyParams: string[] = [];
