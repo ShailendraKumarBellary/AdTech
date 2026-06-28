@@ -61,7 +61,7 @@ export class AIChatboxComponent implements AfterViewChecked {
       keyword: userQueryText
     };
 
-    this.http.post('adtechapi2026.centralindia.cloudapp.azure.com/api/AI/Search', payload)
+    this.http.post('https://adtechapi2026.centralindia.cloudapp.azure.com/api/AI/Search', payload)
       .subscribe({
         next: (res: any) => {
           let rawContent = '';
