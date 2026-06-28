@@ -1,0 +1,27 @@
+<div class="chat-container" [class.disabled]="loading">
+  <div class="chat-header">
+    <h3>Ad Tech AI</h3>
+  </div>
+  
+  <div class="chat-messages" #scrollContainer>
+    <div *ngFor="let msg of messages" 
+         [ngClass]="{'message-user': msg.sender === 'user', 'message-bot': msg.sender === 'bot'}" 
+         class="message-bubble">
+      <div class="message-text">{{ msg.text }}</div>
+      <div class="message-time">{{ msg.timestamp | date:'shortTime' }}</div>
+    </div>
+
+    <div class="bot-loading-bubble" *ngIf="loading">
+      <mat-spinner [diameter]="30"></mat-spinner>
+    </div>
+  </div>
+
+  <div class="chat-input-area">
+    <input type="text" 
+           [(ngModel)]="newMessage" 
+           (keyup.enter)="sendMessage()" 
+           [disabled]="loading"
+           placeholder="Type a message..." />
+    <button (click)="sendMessage()" [disabled]="loading">Send</button>
+  </div>
+</div>

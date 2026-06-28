@@ -1,0 +1,67 @@
+/* --- AI Column Stacking and Component Styles --- */
+.right-metrics-column {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem; /* Forces a perfect gap breakdown matching the left control column */
+}
+
+.ai-chat-card {
+    display: flex;
+    flex-direction: column;
+    background: #ffffff;
+}
+
+.ai-card-header {
+    padding-bottom: 0.85rem;
+    border-bottom: 1px solid #f1f5f9;
+    margin-bottom: 1rem;
+}
+
+.ai-label {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #4f46e5; /* Thematic Purple styling */
+    letter-spacing: -0.01em;
+}
+
+.ai-form-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/* Custom button style to differentiate AI execution from discovery actions */
+.btn-ai-primary {
+    color: #ffffff;
+    background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%);
+    border: none;
+    box-shadow: 0 2px 4px 0 rgba(79, 70, 229, 0.15);
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 0.625rem 1.25rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    text-align: center;
+}
+
+.btn-ai-primary:hover {
+    background: linear-gradient(135deg, #4338ca 0%, #4f46e5 100%);
+    box-shadow: 0 4px 6px 0 rgba(79, 70, 229, 0.25);
+}
+
+.w-full {
+    width: 100%;
+}
+
+/* Angular Material Field Structural Refinement */
+::v-deep .custom-mat-field .mat-mdc-text-field-wrapper {
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
+}
+
+::v-deep .custom-mat-field input.mat-mdc-input-element {
+    font-family: 'Inter', sans-serif !important;
+    font-size: 0.9rem !important;
+    color: #1e293b !important;
+}

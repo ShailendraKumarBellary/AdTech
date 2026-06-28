@@ -1,9 +1,4 @@
-<ngx-spinner bdColor="rgba(15, 23, 42, 0.75)" size="medium" color="#6366f1" type="ball-spin-clockwise">
-    <p style="color: white; font-family: sans-serif; font-size: 14px; margin-top: 10px;">Fetching URL info via
-        Playwright...</p>
-</ngx-spinner>
-
-<div class="dashboard-wrapper">
+<div class="dashboard-wrapper" [class.disabled]="loading">
 
     <div class="logout-container" style="position: absolute; top: 20px; right: 20px;">
         <button class="status-indicator online" (click)="logout()">Logout</button>
@@ -51,6 +46,9 @@
                     <div class="input-group">
                         <input type="text" [(ngModel)]="URLinfo" placeholder="https://example.com/page-to-test">
                         <button class="btn btn-primary" (click)="getURLInfo()">Get URL Info</button>
+                    </div>
+                    <div class="loading-overlay" *ngIf="loading">
+                        <mat-spinner></mat-spinner>
                     </div>
                 </div>
             </div>
@@ -128,6 +126,32 @@
                             }
                         </div>
                     </div>
+                </div>
+            </div>
+            <div class="card shadow-sm ai-chat-card" style="margin-top: 10px !important;">
+                <!-- <div class="ai-card-header">
+                    <span class="ai-label">✨ Ad Tech AI</span>
+                </div> -->
+
+                <div class="ai-form-stack">
+                    <app-ai-chatbox [sessionId]="sessionId"></app-ai-chatbox>
+                    <!-- <div class="form-group">
+                        <label class="form-label">Keyword Context</label>
+                        <mat-form-field appearance="outline" class="custom-mat-field">
+                            <input matInput [(ngModel)]="keyword" placeholder="e.g., line item, slot">
+                        </mat-form-field>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Ask AdTech AI</label>
+                        <mat-form-field appearance="outline" class="custom-mat-field">
+                            <input matInput [(ngModel)]="question" placeholder="Ask a diagnostic question...">
+                        </mat-form-field>
+                    </div>
+
+                    <button class="btn btn-ai-primary w-full" (click)="AskAI()">
+                        Ask AI Assistant
+                    </button> -->
                 </div>
             </div>
         </div>

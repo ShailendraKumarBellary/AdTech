@@ -1,16 +1,16 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { NgxSpinnerModule } from 'ngx-spinner';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import {MatCheckboxModule} from '@angular/material/checkbox';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 declare const googletag: any;
 
 @Component({
   selector: 'app-interstitial',
   standalone: true,
-  imports: [NgxSpinnerModule, FormsModule, CommonModule,MatCheckboxModule],
+  imports: [MatProgressSpinnerModule, FormsModule, CommonModule, MatCheckboxModule],
   templateUrl: './interstitial.component.html',
   styleUrl: './interstitial.component.css'
 })
@@ -19,7 +19,6 @@ export class InterstitialComponent implements OnInit, OnDestroy {
   loading: boolean = false;
   private interstitialSlot: any;
   private adLoaded: boolean = false;
-  isLoading: boolean = false;
   targetingPairs = [{ key: '', value: '' }];
   selectedDevice = 'mobile';
   enableViewports: boolean = false;
@@ -55,14 +54,15 @@ export class InterstitialComponent implements OnInit, OnDestroy {
   }
 
   testInterstitial(): void {
-    this.isLoading = true;
+    this.loading = true;
     if (!this.adUnitPath.trim()) {
       alert('Please enter a valid ad unit path.');
       return;
     }
 
-    this.loading = true;
+    this.loading = false;
     this.loadInterstitialAd(this.adUnitPath.trim());
+    this.loading = false;
   }
 
   reset(): void {
@@ -77,6 +77,7 @@ export class InterstitialComponent implements OnInit, OnDestroy {
   }
 
   private loadInterstitialAd(adUnitPath: string): void {
+    this.loading = true;
     this.adLoaded = false;
     googletag.cmd.push(() => {
       if (this.interstitialSlot) {
@@ -101,7 +102,7 @@ export class InterstitialComponent implements OnInit, OnDestroy {
       googletag.pubads().addEventListener('slotOnload', (event: any) => {
         if (event.slot === this.interstitialSlot) {
           this.adLoaded = true;
-
+          this.loading = false;
           setTimeout(() => {
             this.loading = false;
           }, 15000);
@@ -118,9 +119,10 @@ export class InterstitialComponent implements OnInit, OnDestroy {
     });
   }
   openTestWindow(): void {
-
+    this.loading = true;
     if (!this.adUnitPath?.trim()) {
       alert('Please enter Ad Unit Path');
+      this.loading = false;
       return;
     }
 
@@ -131,7 +133,7 @@ export class InterstitialComponent implements OnInit, OnDestroy {
     );
 
     const adUnit = encodeURIComponent(this.adUnitPath);
-
+    this.loading = false;
     window.open(
       `/interstitial-preview?adUnit=${adUnit}&targeting=${targeting}`,
       '_blank',
@@ -140,6 +142,7 @@ export class InterstitialComponent implements OnInit, OnDestroy {
      resizable=yes,
      scrollbars=yes`
     );
+
   }
 
   resetTester(): void {

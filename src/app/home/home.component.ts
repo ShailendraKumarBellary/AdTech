@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
@@ -11,17 +10,19 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTableModule } from '@angular/material/table';
 import { Router } from '@angular/router';
+import { AIChatboxComponent } from '../ai-chatbox/ai-chatbox.component';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [FormsModule, CommonModule, NgxSpinnerModule, MatInputModule, MatFormFieldModule, MatSelectModule, MatCardModule, MatButtonModule, MatToolbarModule, MatTableModule],
+  imports: [FormsModule, CommonModule, MatProgressSpinnerModule, MatInputModule, MatFormFieldModule, MatSelectModule, MatCardModule, MatButtonModule, MatToolbarModule, MatTableModule,AIChatboxComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
 
-  constructor(private spinner: NgxSpinnerService,
+  constructor(
     private http: HttpClient,
     private router: Router
   ) { }
@@ -34,12 +35,17 @@ export class HomeComponent {
   apiurl = 'https://adtechapi2026.centralindia.cloudapp.azure.com/api/Scrape?url=';
   filteredData: any[] = [];
   urlFilteredData: any;
+  sessionId: string = '';
   keyParams: string[] = [];
   selectedReportDimension: string = '';
   currentView: 'home' | 'cmp' | 'interstitial' | 'rewarded' = 'home';
   public currentPage: number = 1;
   public pageSize: number = 10;
   protected readonly Math = Math;
+  aiResponse: any;
+  question: string = '';
+  keyword: string = '';
+  loading = false;
 
 
 
@@ -60,10 +66,10 @@ export class HomeComponent {
   }
 
   getURLInfo() {
-    this.spinner.show();
+    this.loading = true;
     this.URLData = null;
-    if(this.URLinfo === undefined || this.URLinfo.trim() === '') {
-      this.spinner.hide();
+    if (this.URLinfo === undefined || this.URLinfo.trim() === '') {
+      this.loading = false;
       alert('Please enter a valid URL.');
       return;
     }
@@ -72,21 +78,21 @@ export class HomeComponent {
         next: (data: any) => {
           this.URLData = data;
           console.log("Received URL Data:", this.URLData);
-          //this.showTable = true;
+          this.sessionId = this.URLData.sessionId;
           this.filteredData = this.URLData.response;
           this.parseAllUrls();
-          this.spinner.hide();
+          this.loading = false;
         },
         error: (error) => {
           console.error(error);
-          this.spinner.hide();
+          this.loading = false;
         }
       });
 
   }
 
   SearchUrl() {
-    this.spinner.show();
+    this.loading = true;
     // this.urlFilteredData = this.formatURLData(this.URLData);
     // console.log("Formatted URL Data for Search:", this.urlFilteredData);
     this.filteredData = this.URLData.response.filter((item: any) => {
@@ -102,10 +108,10 @@ export class HomeComponent {
       });
       console.log(params);
       this.urlFilteredData = params;
-      this.spinner.hide();
+      this.loading = false;
       this.showTable = true;
     } else {
-      this.spinner.hide();
+      this.loading = false;
       this.showTable = false;
     }
     if (!this.filteredData) {
@@ -117,20 +123,20 @@ export class HomeComponent {
 
   //format the URL data to JSON:
   parseAllUrls() {
-  this.URLData.response.forEach((item: any) => {
+    this.URLData.response.forEach((item: any) => {
 
-    const parsedUrl = new URL(item.url);
+      const parsedUrl = new URL(item.url);
 
-    const params: any = {};
+      const params: any = {};
 
-    parsedUrl.searchParams.forEach((value, key) => {
-      params[key] = value;
+      parsedUrl.searchParams.forEach((value, key) => {
+        params[key] = value;
+      });
+
+      item.urlParams = params;
+
     });
-
-    item.urlParams = params;
-
-  });
-}
+  }
 
   addSelectedDimension() {
     console.log("Selected Report Dimension:", this.selectedReportDimension);

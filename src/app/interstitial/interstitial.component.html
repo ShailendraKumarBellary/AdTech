@@ -1,4 +1,4 @@
-<div class="dashboard-wrapper">
+<div class="dashboard-wrapper" [class.disabled]="loading">
 
     <header class="dashboard-header">
         <div class="header-left">
@@ -34,6 +34,9 @@
                     <button class="btn btn-primary" (click)="testInterstitial()" [disabled]="enableViewports">Test Interstitial</button>
                     <button class="btn btn-secondary" (click)="resetTester()">Reset</button>
                 </div>
+                <div class="loading-overlay" *ngIf="loading">
+                        <mat-spinner></mat-spinner>
+                    </div>
                 <br>
                 <label class="form-label">Enter Targeting Key-Value Pairs (optional)<span class="info-trigger"
                         title="Enter the Key-Value pairs for targeting.">?</span></label>
