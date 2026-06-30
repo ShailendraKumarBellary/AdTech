@@ -21,6 +21,10 @@ By targeting only relevant script contexts, the application filters out backgrou
 3. **Analyze & Query:** Developers chat with an AI tuned strictly to the isolated code footprint.
 
 ---
+👉 **Try the application here:**
+
+**https://purple-pebble-079996210.7.azurestaticapps.net/home**
+---
 
 ## ✨ Features Breakdown
 
