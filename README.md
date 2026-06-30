@@ -38,7 +38,8 @@ By targeting only relevant script contexts, the application filters out backgrou
 ## 🖥️ Screen Previews
 
 ### Main Audit Dashboard
-![Dashboard](<img width="1559" height="1881" alt="image" src="https://github.com/user-attachments/assets/ce45354f-1b61-4c92-b8f9-d95000a82e2f" />)
+![Dashboard]
+<img width="1559" height="1881" alt="image" src="https://github.com/user-attachments/assets/cf8e7ddd-ef36-4a81-8f5d-d19f51af4504" />
 
 ### Interactive AI Debugging Canvas
 ![AI Assistant](https://github.com/user-attachments/assets/b4dc8b4c-ec34-420f-95ab-7c379ef7382c)
