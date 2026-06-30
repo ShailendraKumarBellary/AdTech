@@ -15,15 +15,13 @@ An AI-powered AdTech troubleshooting platform built with **Angular**, **ASP.NET 
 
 By targeting only relevant script contexts, the application filters out background noise before querying OpenAI—resulting in **faster, highly accurate, and cost-effective AI responses**.
 
-### How it works:
-1. **Crawl & Extract:** Playwright deep-scans a target URL.
-2. **Isolate Context:** The backend isolates GPT configurations, Prebid snippets, and CMP hooks.
-3. **Analyze & Query:** Developers chat with an AI tuned strictly to the isolated code footprint.
+### 🔄 Core Workflow
+1. **Crawl & Extract:** Playwright executes a deep-scan of the target URL to capture dynamic scripts.
+2. **Isolate Context:** The .NET backend parses the payload, stripping noise to isolate GPT configurations, Prebid snippets, and CMP hooks.
+3. **Analyze & Query:** Developers interact with a GPT-4.1 Mini instance specifically tuned to the isolated code footprint.
 
----
-👉 **Try the application here:**
+> 🌐 **Live Demo:** Explore the application at [purple-pebble-079996210.7.azurestaticapps.net/home](https://purple-pebble-079996210.7.azurestaticapps.net/home)
 
-**https://purple-pebble-079996210.7.azurestaticapps.net/home**
 ---
 
 ## ✨ Features Breakdown
@@ -39,15 +37,37 @@ By targeting only relevant script contexts, the application filters out backgrou
 
 ---
 
-## 🖥️ Screen Previews
+## 🏗️ System Architecture
 
-### Main Audit Dashboard
-![Dashboard]
-<img width="1559" height="1881" alt="image" src="https://github.com/user-attachments/assets/cf8e7ddd-ef36-4a81-8f5d-d19f51af4504" />
+The application relies on a decoupled, asynchronous architecture designed to handle heavy headless browser operations while maintaining a snappy user experience.
 
-### Interactive AI Debugging Canvas
-![AI Assistant](https://github.com/user-attachments/assets/b4dc8b4c-ec34-420f-95ab-7c379ef7382c)
+```
+[ Angular 18 Frontend ] 
+         │  ▲
+  HTTPS  │  │ SSE / WebSockets (Real-time logs)
+         ▼  │
+[ ASP.NET Core 8.0 Web API ]
+         │
+         ├──► [ Playwright Crawler Instance ] ──► ( Fetches Target Website )
+         │                                               │
+         ◄────────────────── Returns DOM & Network Logs ─┘
+         │
+         ├──► [ Context Isolation Engine ] ──► ( Strips Boilerplate & Identifies Ad Scripts )
+         │
+         ▼
+[ OpenAI API (GPT-4.1 Mini) ]
+```
+
+### Architectural Highlights
+
+* **Frontend (Angular 18):** Features a reactive state management system and an interactive code-highlighting canvas for reviewing isolated ad scripts.
+* **Backend (ASP.NET Core 8):** Utilizes a scalable Controller-Service pattern. Headless browser operations are managed via a pool of optimized Playwright workers to control memory overhead.
+* **Context Isolation Layer:** A custom text-parsing engine that extracts only relevant ad tech blocks (e.g., `googletag.cmd`, `pbjs.que`). This reduces the raw HTML size by up to **90%**, heavily reducing OpenAI token consumption and lowering latency.
+* **AI Orchestration:** Implements prompt caching and fine-tuned system instructions to ensure responses strictly target troubleshooting issues like misconfigured ad units, missing key-values, or consent string failures.
 
 ---
 
-## 🏗️ System Architecture
+## 🖥️ Screen Previews
+
+### Main Audit Dashboard
+<img width="1174" height="1340" alt="image" src="https://github.com/user-attachments/assets/b0d207f9-278b-4d28-b49a-5cdd2ec5b32b" />
