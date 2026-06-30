@@ -1,32 +1,48 @@
+# 🚀 AdTech AI Assistant
 
-# AdTech
+[![Angular](https://img.shields.io/badge/Angular-18-DD0031?style=for-the-badge&logo=angular&logoColor=white)](https://angular.dev/)
+[![.NET Core](https://img.shields.io/badge/.NET_Core-8.0-512BD4?style=for-the-badge&logo=dotnet&logoColor=white)](https://dotnet.microsoft.com/)
+[![Playwright](https://img.shields.io/badge/Playwright-Platform-2EAD33?style=for-the-badge&logo=playwright&logoColor=white)](https://playwright.dev/)
+[![OpenAI](https://img.shields.io/badge/OpenAI-GPT--4.1_Mini-412991?style=for-the-badge&logo=openai&logoColor=white)](https://openai.com/)
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.21.
+An AI-powered AdTech troubleshooting platform built with **Angular**, **ASP.NET Core**, **Playwright**, and **OpenAI**. It automatically analyzes publisher websites and provides intelligent, context-aware explanations for Google Ad Manager (GAM) and Header Bidding implementations.
 
-## Development server
+---
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## 📖 Overview
 
-## Code scaffolding
+**AdTech AI Assistant** helps publishers and Ad Operations engineers instantly audit website ad setups without digging through minified source code. 
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+By targeting only relevant script contexts, the application filters out background noise before querying OpenAI—resulting in **faster, highly accurate, and cost-effective AI responses**.
 
-## Build
+### How it works:
+1. **Crawl & Extract:** Playwright deep-scans a target URL.
+2. **Isolate Context:** The backend isolates GPT configurations, Prebid snippets, and CMP hooks.
+3. **Analyze & Query:** Developers chat with an AI tuned strictly to the isolated code footprint.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+---
 
-## Running unit tests
+## ✨ Features Breakdown
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+| Module | Capabilities |
+| :--- | :--- |
+| **🌐 Website Analyzer** | Multi-threaded crawling via Playwright, JS resource mapping, network payload inspection, and security header validation. |
+| **🎯 Google Ad Manager** | Automated detection of Google Publisher Tags (GPT), `SecurePubAds` paths, active network ad requests, and Network IDs. |
+| **⚡ Header Bidding** | Direct identification of `Prebid.js` footprints, Amazon TAM wrappers, Open Bidding queries, and bidder configurations. |
+| **🛡️ CMP Identification** | Auto-detects major consent compliance frameworks (OneTrust, Quantcast, TrustArc, Didomi, CookieBot, SourcePoint, Google Funding Choices). |
+| **📄 Compliance Guard** | Instant parsing and status validation of `ads.txt` and `robots.txt` paths. |
+| **🤖 Context-Aware AI** | Custom-engineered token filtering utilizing **GPT-4.1 Mini** to debug live script setups. |
 
-## Running end-to-end tests
+---
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+## 🖥️ Screen Previews
 
-## Further help
+### Main Audit Dashboard
+![Dashboard](https://github.com/user-attachments/assets/ac8c008a-94b3-4705-9309-e4cfb22f629c)
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+### Interactive AI Debugging Canvas
+![AI Assistant](https://github.com/user-attachments/assets/b4dc8b4c-ec34-420f-95ab-7c379ef7382c)
 
-## Screenshots
-<img width="1135" height="1154" alt="image" src="https://github.com/user-attachments/assets/ac8c008a-94b3-4705-9309-e4cfb22f629c" />
-<img width="1478" height="1895" alt="image" src="https://github.com/user-attachments/assets/b4dc8b4c-ec34-420f-95ab-7c379ef7382c" />
+---
+
+## 🏗️ System Architecture
