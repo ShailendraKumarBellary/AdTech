@@ -20,6 +20,9 @@ interface Message {
 export class AIChatboxComponent implements AfterViewChecked {
   // Grab a reference to the scroll container element from the HTML template
   @ViewChild('scrollContainer') private myScrollContainer!: ElementRef;
+  apiUrl: string =  ' https://adtechapi.eastus.cloudapp.azure.com/api/AI/Search';
+  //apiUrl: string =  'https://localhost:44328/api/AI/Search';
+
 
   newMessage: string = '';
   messages: Message[] = [
@@ -61,7 +64,7 @@ export class AIChatboxComponent implements AfterViewChecked {
       keyword: userQueryText
     };
 
-    this.http.post('https://adtechapi2026.centralindia.cloudapp.azure.com/api/AI/Search', payload)
+    this.http.post(this.apiUrl, payload)
       .subscribe({
         next: (res: any) => {
           let rawContent = '';
