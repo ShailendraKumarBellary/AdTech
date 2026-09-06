@@ -18,16 +18,16 @@
                 <button class="nav-tab" [class.active]="currentView === 'home'" (click)="navigateTo('home')">
                     Home
                 </button>
-                <button class="nav-tab" [class.active]="currentView === 'cmp'" (click)="navigateTo('cmp')">
+                <!-- <button class="nav-tab" [class.active]="currentView === 'cmp'" (click)="navigateTo('cmp')">
                     CMP
-                </button>
+                </button> -->
                 <button class="nav-tab" [class.active]="currentView === 'interstitial'"
                     (click)="navigateTo('interstitial')">
                     Interstitial
                 </button>
-                <button class="nav-tab" [class.active]="currentView === 'rewarded'" (click)="navigateTo('rewarded')">
+                <!-- <button class="nav-tab" [class.active]="currentView === 'rewarded'" (click)="navigateTo('rewarded')">
                     Rewarded
-                </button>
+                </button> -->
             </div>
         </div>
     </header>
@@ -84,7 +84,27 @@
                     </div>
                 </div>
             </div>
-
+            <div class="card shadow-sm" *ngIf="URLData && cpmNetworkCodes.length; else noData">
+                <div class="form-group">
+                    <label class="form-label">
+                        Extracted Network Codes
+                        <span class="info-trigger"
+                            title="Extracted Google Ad Manager (GAM) network ID from the CMP script tag.">?
+                        </span>
+                    </label>
+                    <div class="input-group">
+                        <span class="code-badge" *ngFor="let code of cpmNetworkCodes">
+                            <span class="code-badge">{{ code.code }}</span>
+                           
+                                {{ code.url }} 
+                         
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <ng-template #noData>
+                <span class="card shadow-sm form-group form-label" *ngIf="URLData && cpmNetworkCodes.length === 0">No CMP detected</span>
+            </ng-template>
         </div>
 
         <div class="right-metrics-column" *ngIf="URLData">

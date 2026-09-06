@@ -8,8 +8,6 @@ export const routes: Routes = [
   { path: '', component: LoginComponent },
   { path: 'home', component: HomeComponent, canActivate: [authGuard] },
   { path: 'interstitial', loadComponent: () => import('./interstitial/interstitial.component').then(m => m.InterstitialComponent), canActivate: [authGuard] },
-  { path: 'rewarded', loadComponent: () => import('./rewarded/rewarded.component').then(m => m.RewardedComponent), canActivate: [authGuard] },
   { path: 'interstitial-preview', loadComponent: () => import('./interstitial-preview/interstitial-preview.component').then(m => m.InterstitialPreviewComponent) },
-  { path: 'cmp', loadComponent: () => import('./cmp/cmp.component').then(m => m.CmpComponent), canActivate: [authGuard] },
   { path: '**', redirectTo: '' }
 ];

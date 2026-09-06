@@ -11,12 +11,12 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTableModule } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { AIChatboxComponent } from '../ai-chatbox/ai-chatbox.component';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [FormsModule, CommonModule, MatProgressSpinnerModule, MatInputModule, MatFormFieldModule, MatSelectModule, MatCardModule, MatButtonModule, MatToolbarModule, MatTableModule,AIChatboxComponent],
+  imports: [FormsModule, CommonModule, MatProgressSpinnerModule, MatInputModule, MatFormFieldModule, MatSelectModule, MatCardModule, MatButtonModule, MatToolbarModule, MatTableModule, AIChatboxComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
@@ -31,8 +31,8 @@ export class HomeComponent {
   searchQuery: any;
   URLData: any;
   showTable: boolean = false;
-  //apiurl = 'https://localhost:44328/api/Scrape?url=';
-  apiurl = 'https://adtechapi.eastus.cloudapp.azure.com/api/Scrape?url=';
+  apiurl = 'https://localhost:44328/api/Scrape?url=';
+  //apiurl = 'https://adtechapi.eastus.cloudapp.azure.com/api/Scrape?url=';
   filteredData: any[] = [];
   urlFilteredData: any;
   sessionId: string = '';
@@ -46,6 +46,7 @@ export class HomeComponent {
   question: string = '';
   keyword: string = '';
   loading = false;
+  cpmNetworkCodes: { code: string; url: string }[] = [];
 
 
 
@@ -81,6 +82,8 @@ export class HomeComponent {
           this.sessionId = this.URLData.sessionId;
           this.filteredData = this.URLData.response;
           this.parseAllUrls();
+          debugger;
+          if (this.URLData.response.length > 0 && this.URLData['hasCMP']) { this.getGoogleCPMAdNetwork(); }
           this.loading = false;
         },
         error: (error) => {
@@ -89,6 +92,17 @@ export class HomeComponent {
         }
       });
 
+  }
+
+  getGoogleCPMAdNetwork() {
+
+    this.URLData['hasCMP'].forEach((url: string) => {
+      // Use global flag 'g' to find all occurrences within a single URL
+      const matches = url.matchAll(/\/i\/(\d+)/g);
+      for (const match of matches) {
+        this.cpmNetworkCodes.push({ code: match[1], url: url });
+      }
+    });
   }
 
   SearchUrl() {
