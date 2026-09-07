@@ -1,0 +1,31 @@
+<div class="dashboard-wrapper">
+    <div class="logout-container" style="position: absolute; top: 20px; right: 20px;">
+        <button class="status-indicator online" (click)="logout()">Logout</button>
+    </div>
+    <header class="dashboard-header">
+        <div class="header-left">
+            <!-- <div class="brand-badge">Ad-Test Tool</div> -->
+            <div>
+                <h1>Automated Ad Delivery Testing Panel</h1>
+                <p class="subtitle">Headless diagnostic system designed to extract live inventory logs, line item
+                    mappings, and dynamic runtime target dimensions.</p>
+            </div>
+        </div>
+        <div class="header-right">
+            <div class="nav-switcher">
+                <button class="nav-tab" [class.active]="currentView === 'home'" (click)="navigateTo('home')">
+                    Home
+                </button>
+                <button class="nav-tab" [class.active]="currentView === 'webHealth'" (click)="navigateTo('webHealth')">
+                    Web Health
+                </button>
+                <button class="nav-tab" [class.active]="currentView === 'interstitial'" (click)="navigateTo('interstitial')">
+                    Interstitial
+                </button>
+                <!-- <button class="nav-tab" [class.active]="currentView === 'rewarded'" (click)="navigateTo('rewarded')">
+                    Rewarded
+                </button> -->
+            </div>
+        </div>
+    </header>
+</div>

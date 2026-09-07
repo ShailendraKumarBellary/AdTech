@@ -1,0 +1,17 @@
+<div class="dashboard-wrapper">
+    <header class="dashboard-header">
+        <app-dashboard-header></app-dashboard-header>
+    </header>
+    <div class="card shadow-sm">
+        <div class="form-row">
+            <div class="form-group">
+                <label class="form-label">Enter Website URL</label>
+                <div class="input-group">
+                    <input type="text" [(ngModel)]="websiteUrl" placeholder="e.g., https://www.example.com" required>
+                    <button class="btn btn-primary" (click)="analyzeWebsite()">Analyze</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>>

@@ -4,13 +4,14 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { DashboardHeaderComponent } from "../shared/dashboard-header/dashboard-header.component";
 
 declare const googletag: any;
 
 @Component({
   selector: 'app-interstitial',
   standalone: true,
-  imports: [MatProgressSpinnerModule, FormsModule, CommonModule, MatCheckboxModule],
+  imports: [MatProgressSpinnerModule, FormsModule, CommonModule, MatCheckboxModule, DashboardHeaderComponent],
   templateUrl: './interstitial.component.html',
   styleUrl: './interstitial.component.css'
 })
@@ -157,8 +158,8 @@ export class InterstitialComponent implements OnInit, OnDestroy {
       this.router.navigate(['/interstitial']);
     } else if (view === 'rewarded') {
       this.router.navigate(['/rewarded']);
-    } else if (view === 'cmp') {
-      this.router.navigate(['/cmp']);
+    } else if (view === 'webHealth') {
+      this.router.navigate(['/webHealth']);
     }
   }
 

@@ -9,5 +9,6 @@ export const routes: Routes = [
   { path: 'home', component: HomeComponent, canActivate: [authGuard] },
   { path: 'interstitial', loadComponent: () => import('./interstitial/interstitial.component').then(m => m.InterstitialComponent), canActivate: [authGuard] },
   { path: 'interstitial-preview', loadComponent: () => import('./interstitial-preview/interstitial-preview.component').then(m => m.InterstitialPreviewComponent) },
+  { path: 'webHealth', loadComponent: () => import('./website-health-analyzer/website-health-analyzer.component').then(m => m.WebsiteHealthAnalyzerComponent), canActivate: [authGuard] },
   { path: '**', redirectTo: '' }
 ];

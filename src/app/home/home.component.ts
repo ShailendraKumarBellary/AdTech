@@ -12,11 +12,12 @@ import { MatTableModule } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { AIChatboxComponent } from '../ai-chatbox/ai-chatbox.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { DashboardHeaderComponent } from "../shared/dashboard-header/dashboard-header.component";
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [FormsModule, CommonModule, MatProgressSpinnerModule, MatInputModule, MatFormFieldModule, MatSelectModule, MatCardModule, MatButtonModule, MatToolbarModule, MatTableModule, AIChatboxComponent],
+  imports: [FormsModule, CommonModule, MatProgressSpinnerModule, MatInputModule, MatFormFieldModule, MatSelectModule, MatCardModule, MatButtonModule, MatToolbarModule, MatTableModule, AIChatboxComponent, DashboardHeaderComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
@@ -38,7 +39,7 @@ export class HomeComponent {
   sessionId: string = '';
   keyParams: string[] = [];
   selectedReportDimension: string = '';
-  currentView: 'home' | 'cmp' | 'interstitial' | 'rewarded' = 'home';
+  currentView: 'home' | 'webHealth' | 'interstitial' | 'rewarded' = 'home';
   public currentPage: number = 1;
   public pageSize: number = 10;
   protected readonly Math = Math;
@@ -47,24 +48,6 @@ export class HomeComponent {
   keyword: string = '';
   loading = false;
   cpmNetworkCodes: { code: string; url: string }[] = [];
-
-
-
-
-
-  // Method to navigate to different views
-  navigateTo(view: 'home' | 'cmp' | 'interstitial' | 'rewarded'): void {
-    this.currentView = view;
-    if (view === 'home') {
-      this.router.navigate(['/home']);
-    } else if (view === 'interstitial') {
-      this.router.navigate(['/interstitial']);
-    } else if (view === 'rewarded') {
-      this.router.navigate(['/rewarded']);
-    } else if (view === 'cmp') {
-      this.router.navigate(['/cmp']);
-    }
-  }
 
   getURLInfo() {
     this.loading = true;
