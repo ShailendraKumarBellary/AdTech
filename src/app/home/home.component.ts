@@ -12,28 +12,42 @@ import { MatTableModule } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { AIChatboxComponent } from '../ai-chatbox/ai-chatbox.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { DashboardHeaderComponent } from "../shared/dashboard-header/dashboard-header.component";
+import { DashboardHeaderComponent } from '../shared/dashboard-header/dashboard-header.component';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [FormsModule, CommonModule, MatProgressSpinnerModule, MatInputModule, MatFormFieldModule, MatSelectModule, MatCardModule, MatButtonModule, MatToolbarModule, MatTableModule, AIChatboxComponent, DashboardHeaderComponent],
+  imports: [
+    FormsModule,
+    CommonModule,
+    MatProgressSpinnerModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatCardModule,
+    MatButtonModule,
+    MatToolbarModule,
+    MatTableModule,
+    AIChatboxComponent,
+    DashboardHeaderComponent,
+  ],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.css'
+  styleUrl: './home.component.css',
 })
 export class HomeComponent {
-
   constructor(
     private http: HttpClient,
-    private router: Router
-  ) { }
+    private router: Router,
+  ) {}
 
   URLinfo: any;
   searchQuery: any;
   URLData: any;
   showTable: boolean = false;
-  apiurl = 'https://localhost:44328/api/Scrape?url=';
-  //apiurl = 'https://adtechapi.eastus.cloudapp.azure.com/api/Scrape?url=';
+  apiurl = `${environment.apiUrl}/Scrape`;
+  //apiurl = 'https://localhost:44328/api/Scrape?url=';
+  // apiurl = 'https://dot-net-web-api.onrender.com/api/Scrape?url=';
   filteredData: any[] = [];
   urlFilteredData: any;
   sessionId: string = '';
@@ -52,33 +66,45 @@ export class HomeComponent {
   getURLInfo() {
     this.loading = true;
     this.URLData = null;
-    if (this.URLinfo === undefined || this.URLinfo.trim() === '') {
+
+    if (!this.URLinfo || this.URLinfo.trim() === '') {
       this.loading = false;
       alert('Please enter a valid URL.');
       return;
     }
-    this.http.get(this.apiurl + this.URLinfo)
+
+    this.http
+      .get(this.apiurl, {
+        params: {
+          url: this.URLinfo.trim(),
+        },
+      })
       .subscribe({
         next: (data: any) => {
           this.URLData = data;
-          console.log("Received URL Data:", this.URLData);
+
+          console.log('Received URL Data:', this.URLData);
+
           this.sessionId = this.URLData.sessionId;
           this.filteredData = this.URLData.response;
+
           this.parseAllUrls();
-          debugger;
-          if (this.URLData.response.length > 0 && this.URLData['hasCMP']) { this.getGoogleCPMAdNetwork(); }
+
+          if (this.URLData.response.length > 0 && this.URLData['hasCMP']) {
+            this.getGoogleCPMAdNetwork();
+          }
+
           this.loading = false;
         },
+
         error: (error) => {
           console.error(error);
           this.loading = false;
-        }
+        },
       });
-
   }
 
   getGoogleCPMAdNetwork() {
-
     this.URLData['hasCMP'].forEach((url: string) => {
       // Use global flag 'g' to find all occurrences within a single URL
       const matches = url.matchAll(/\/i\/(\d+)/g);
@@ -93,10 +119,12 @@ export class HomeComponent {
     // this.urlFilteredData = this.formatURLData(this.URLData);
     // console.log("Formatted URL Data for Search:", this.urlFilteredData);
     this.filteredData = this.URLData.response.filter((item: any) => {
-      return JSON.stringify(item).toLowerCase().includes(this.searchQuery.toLowerCase());
+      return JSON.stringify(item)
+        .toLowerCase()
+        .includes(this.searchQuery.toLowerCase());
     });
     if (this.filteredData.length > 0) {
-      console.log("Filtered Data after the search query:", this.filteredData);
+      console.log('Filtered Data after the search query:', this.filteredData);
       const parsedUrl = new URL(this.filteredData[0].url);
       const params: any = {};
       parsedUrl.searchParams.forEach((value, key) => {
@@ -115,13 +143,11 @@ export class HomeComponent {
       this.filteredData = this.URLData.response;
       return;
     }
-
   }
 
   //format the URL data to JSON:
   parseAllUrls() {
     this.URLData.response.forEach((item: any) => {
-
       const parsedUrl = new URL(item.url);
 
       const params: any = {};
@@ -131,22 +157,17 @@ export class HomeComponent {
       });
 
       item.urlParams = params;
-
     });
   }
 
   addSelectedDimension() {
-    console.log("Selected Report Dimension:", this.selectedReportDimension);
+    console.log('Selected Report Dimension:', this.selectedReportDimension);
     console.log('Value:', this.urlFilteredData[this.selectedReportDimension]);
-
   }
   logout() {
     localStorage.removeItem('isLoggedIn');
     this.router.navigate(['/']);
   }
-
 }
-
-
 
 // vnepress net morewords com  grennwichmeantime   omio com  chrintianpost  com
