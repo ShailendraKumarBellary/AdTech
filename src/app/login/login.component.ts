@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -32,7 +33,7 @@ export class LoginComponent {
       return;
     }
 
-    this.http.post('https://localhost:44328/api/Auth/login', this.credentials).subscribe((response: any) => {
+    this.http.post(`${environment.apiUrl}/Auth/login`, this.credentials).subscribe((response: any) => {
       if(response && response.token) { debugger
         // Store the token in local storage or a service for future requests
         localStorage.setItem('authToken', response.token);
