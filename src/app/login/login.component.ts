@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -20,7 +21,7 @@ export class LoginComponent {
 
   errorMessage: string = '';
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private http: HttpClient) {}
 
   onLogin() {
     this.errorMessage = ''; // Clear previous errors
@@ -31,18 +32,12 @@ export class LoginComponent {
       return;
     }
 
-    // Temporary Hardcoded UI Validation
-    if (this.credentials.username === 'admin' && this.credentials.password === 'Bellary@98') {
-      
-      // Simulating a successful login save state
-      localStorage.setItem('isLoggedIn', 'true');
-      
-      // Navigate directly to your dashboard component route
-      this.router.navigate(['/home']); 
-      
-    } else {
-      // Failed login message
-      this.errorMessage = 'Invalid username or password. Please try again.';
-    }
+    this.http.post('https://localhost:44328/api/Auth/login', this.credentials).subscribe((response: any) => {
+      if(response && response.token) { debugger
+        // Store the token in local storage or a service for future requests
+        localStorage.setItem('authToken', response.token);
+        this.router.navigate(['/home']); 
+      }
+    })
   }
 }
